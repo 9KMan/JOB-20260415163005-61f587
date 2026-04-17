@@ -1,0 +1,71 @@
+TITLE: New job: Build SMS-Based Group Trip Planning MVP (Twilio + Next.js + Stripe)
+CLIENT: Amanda AI
+TIER: HIGH | BUDGET: $7500 | RATE: fixed
+TIMELINE: None
+TECH_STACK: N, e, x, t, ., j, s,  , 1, 4, +, ,,  , P, o, s, t, g, r, e, S, Q, L, /, S, u, p, a, b, a, s, e, ,,  , S, u, p, a, b, a, s, e,  , A, u, t, h, ,,  , T, w, i, l, i, o, ,,  , S, t, r, i, p, e, ,,  , O, p, e, n, A, I
+URL: https://www.upwork.com/jobs/~022044094478292989118
+
+DESCRIPTION:
+New job: Build SMS-Based Group Trip Planning MVP (Twilio + Next.js + Stripe)
+
+FULL DESCRIPTION:
+Build SMS-Based Group Trip Planning MVP (Twilio + Next.js + Stripe)
+
+SUMMARY:
+We are building the MVP of Amanda AI — a group trip decision tool that replaces chaotic group chats with a structured SMS survey.
+
+How it works:
+1. Admin creates a trip on our site and pays a one-time fee (Stripe Checkout).
+2. System generates a unique shareable link.
+3. Admin drops the link into their group chat.
+4. Each participant clicks the link, enters name + phone number, consents to texts.
+5. System sends each participant a short SMS survey (~12 or less multiple-choice questions) via Twilio.
+6. Participants reply privately — no one sees anyone else's answers.
+7. Admin monitors progress on a dashboard, clicks "Generate Results."
+8. System aggregates responses and uses OpenAI to produce 1–3 text-based trip summaries.
+
+This MVP collects, aggregates, and presents. It does NOT book anything.
+
+ADMIN FLOW:
+- Magic-link auth (Supabase Auth)
+- Trip creation form → Stripe Checkout → dashboard
+- Dashboard: shareable link, participant table with live status (Not Started / In Progress / Complete / Abandoned), progress bar, "Generate Results" button, results cards
+
+PARTICIPANT FLOW:
+- Public opt-in page: name, phone, consent checkboxes (Terms + Privacy)
+- Phone validation, duplicate detection per trip
+- On submit: first SMS fires within 30 seconds
+
+SMS ENGINE (core logic):
+- Twilio send/receive via webhooks
+- 5-12 sequential multiple-choice questions (hardcoded for golf trips)
+- Participant replies with a number, system validates, stores response, sends next question
+- Invalid input: retry once, then skip
+- Reminder cron: nudge after 24hr idle (not started) or 6hr idle (in progress), max 2 reminders
+- Auto-abandon after 48hr with no response post-reminders
+
+RESULTS:
+- Aggregate all responses per question (count per option)
+- Send aggregation to OpenAI GPT-4o with structured prompt
+- Parse JSON response → display 1–3 trip option cards on dashboard
+
+TECH STACK (required):
+- Next.js 14+ (App Router) on Vercel
+- PostgreSQL on Supabase
+- Supabase Auth (magic link)
+- Twilio Programmable Messaging
+- Stripe Checkout (one-time payment)
+- OpenAI API (single call per results generation)
+
+NOT in scope:
+- Booking integrations, Web scraping, Custom question editing, Multiple trip types (golf only), Mobile app, Payment splitting, Email notifications, Analytics
+
+MILESTONES:
+1. Admin auth + trip creation + Stripe + dashboard shell (week 2)
+2. Participant opt-in + full Twilio SMS flow (week 4)
+3. Dashboard live tracking + Generate Results + OpenAI (week 6)
+4. QA + edge cases + polish (week 7–8)
+
+Budget: $7,500.00 fixed
+Timeline: 6-8 weeks
+Client: Amanda AI
